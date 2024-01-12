@@ -4,7 +4,7 @@ namespace AAA.Core.Runtime.Singleton
 {
     public class PersistentGenericSingleton<T> : GenericSingleton<T> where T : Component
     {
-        public override void Awake()
+        protected override void Awake()
         {
             if (instance == null)
             {

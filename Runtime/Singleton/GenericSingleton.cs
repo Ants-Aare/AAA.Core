@@ -26,7 +26,7 @@ namespace AAA.Core.Runtime.Singleton
             }
         }
 
-        public virtual void Awake()
+        protected virtual void Awake()
         {
             if (instance == null)
             {
