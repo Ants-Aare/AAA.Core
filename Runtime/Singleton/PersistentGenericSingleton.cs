@@ -6,7 +6,7 @@ namespace AAA.Core.Runtime.Singleton
     {
         protected override void Awake()
         {
-            if (instance == null)
+            if (instance == null || instance == this)
             {
                 instance = this as T;
                 InitializeSingleton();
@@ -14,8 +14,8 @@ namespace AAA.Core.Runtime.Singleton
             }
             else
             {
-                Debug.LogWarning($"There already exists a {GetType()} in this scene. This instance {gameObject.name} will be deleted.");
-                Destroy(gameObject);
+                Debug.LogError($"There already exists an instance of {GetType()} in this scene: {instance.name}. This instance {gameObject.name} will be deleted.");
+                Destroy(this);
             }
         }
     }

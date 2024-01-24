@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace AAA.Core.Runtime.Singleton
 {
@@ -15,9 +16,14 @@ namespace AAA.Core.Runtime.Singleton
                 instance = FindObjectOfType<T>();
                 if (instance != null)
                     return instance;
+
+#if UNITY_EDITOR
+                if (Application.isEditor && !SceneManager.GetActiveScene().isLoaded)
+                    return instance;
+#endif
                 
                 var obj = new GameObject();
-                obj.name = typeof(T).Name;
+                obj.name = $"{typeof(T).Name} -AUTOCREATED-";
                 instance = obj.AddComponent<T>();
                 (instance as GenericSingleton<T>).InitializeSingleton();
                 Debug.LogWarning($"A Singleton of type {instance.GetType().ToString()} was not found. It has been automatically created." +
@@ -28,15 +34,15 @@ namespace AAA.Core.Runtime.Singleton
 
         protected virtual void Awake()
         {
-            if (instance == null)
+            if (instance == null || instance == this)
             {
                 instance = this as T;
                 InitializeSingleton();
             }
             else
             {
-                Debug.LogWarning($"There already exists a {GetType()} in this scene. This instance {gameObject.name} will be deleted.");
-                Destroy(gameObject);
+                Debug.LogError($"There already exists an instance of {GetType()} in this scene: {instance.name}. This instance {gameObject.name} will be deleted.");
+                Destroy(this);
             }
         }
 
