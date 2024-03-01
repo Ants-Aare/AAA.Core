@@ -14,7 +14,7 @@ namespace AAA.Core.Runtime.Singleton
             }
             else
             {
-                Debug.LogError($"There already exists an instance of {GetType()} in this scene: {instance.name}. This instance {gameObject.name} will be deleted.");
+                Debug.LogWarning($"There already exists an instance of {GetType()} in this scene: {instance.name}. This instance {gameObject.name} will be deleted.");
                 Destroy(this);
             }
         }
