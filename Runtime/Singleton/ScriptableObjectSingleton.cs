@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace AAA.Core.Runtime.Singleton
 {
-    public abstract class ScriptableObjectSingleton<T> : ScriptableObject
+    public abstract class  ScriptableObjectSingleton<T> : ScriptableObject
         where T : ScriptableObject
     {
         private static bool _initializeCalled = false;
@@ -22,9 +22,9 @@ namespace AAA.Core.Runtime.Singleton
 
         private void OnEnable()
         {
-            if (_initializeCalled)
-                return;
-            _initializeCalled = true;
+            // if (_initializeCalled)
+            //     return;
+            // _initializeCalled = true;
             InitializeSingleton();
         }
 
