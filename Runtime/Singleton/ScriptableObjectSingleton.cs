@@ -6,7 +6,7 @@ namespace AAA.Core.Runtime.Singleton
         where T : ScriptableObject
     {
         private static bool _initializeCalled = false;
-        private static T _instance = null;
+        protected static T _instance = null;
 
         public static T Instance
         {
