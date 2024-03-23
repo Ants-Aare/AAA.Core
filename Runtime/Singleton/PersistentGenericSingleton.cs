@@ -10,12 +10,16 @@ namespace AAA.Core.Runtime.Singleton
             {
                 instance = this as T;
                 InitializeSingleton();
+                transform.SetParent(null);
                 DontDestroyOnLoad(gameObject);
             }
             else
             {
                 Debug.LogWarning($"There already exists an instance of {GetType()} in this scene: {instance.name}. This instance {gameObject.name} will be deleted.");
-                Destroy(this);
+                if(DestroyGameObjectOnDuplicate)
+                    Destroy(gameObject);
+                else
+                    Destroy(this);
             }
         }
     }

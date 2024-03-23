@@ -5,6 +5,7 @@ namespace AAA.Core.Runtime.Singleton
 {
     public class GenericSingleton<T> : MonoBehaviour where T : Component
     {
+        protected virtual bool DestroyGameObjectOnDuplicate => false;
         protected static T instance;
         public static T Instance
         {
@@ -42,7 +43,10 @@ namespace AAA.Core.Runtime.Singleton
             else
             {
                 Debug.LogError($"There already exists an instance of {GetType()} in this scene: {instance.name}. This instance {gameObject.name} will be deleted.");
-                Destroy(this);
+                if(DestroyGameObjectOnDuplicate)
+                    Destroy(gameObject);
+                else
+                    Destroy(this);
             }
         }
 
